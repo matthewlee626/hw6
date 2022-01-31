@@ -1,26 +1,26 @@
-const cors = require('cors');
 const express = require('express');
-const fs = require('fs');
+const cors = require('cors');
 const path = require('path');
 const thumbsupply = require('thumbsupply');
+const fs = require('fs');
 
-const videos = [
+const videosMetadata = [
   {
       id: 'fire',
-      poster: '/video/fire/poster',
-      duration: '3 mins',
+      thumbnail: '/video/fire/thumbnail',
+      description: 'Fire is hot.',
       name: 'Fire'
   },
   {
       id: 'ocean',
-      poster: '/video/ocean/poster',
-      duration: '4 mins',
+      thumbnail: '/video/ocean/thumbnail',
+      description: 'Ocean is large.',
       name: 'Ocean'
   },
   {
       id: 'sky',
-      poster: '/video/sky/poster',
-      duration: '2 mins',
+      thumbnail: '/video/sky/thumbnail',
+      description: 'Sky is blue.',
       name: 'Sky'
   },
 ];
@@ -29,7 +29,7 @@ const app = express();
 
 app.use(cors());
 
-app.get('/videos', (req, res) => res.json(videos));
+app.get('/videos', (req, res) => res.json(videosMetadata));
 
 app.get('/video/:id', (req, res) => {
   const path = `assets/${req.params.id}.mp4`;
@@ -63,15 +63,15 @@ app.get('/video/:id', (req, res) => {
 });
 
 app.get('/video/:id/data', (req, res) => {
-  const matches = videos.filter(obj => obj.id === req.params.id)
+  const matches = videosMetadata.filter(obj => obj.id === req.params.id);
   res.json(matches[0]);
 });
 
-app.get('/video/:id/poster', (req, res) => {
+app.get('/video/:id/thumbnail', (req, res) => {
   thumbsupply.generateThumbnail(`assets/${req.params.id}.mp4`)
   .then(thumb => res.sendFile(thumb));
 });
 
 app.listen(4000, () => {
-  console.log('Listening on port 4000!')
+  console.log('Listening on port 4000!');
 });

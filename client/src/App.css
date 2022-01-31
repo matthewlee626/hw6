@@ -27,8 +27,8 @@ header, footer {
 }
 
 .card {
-  margin: 10px 0;
-  border-radius: 5px;
+  margin: 10px 0;  
+  overflow: hidden;
 }
 
 a, a:hover {
